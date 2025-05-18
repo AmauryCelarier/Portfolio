@@ -6,7 +6,7 @@ import { fileURLToPath } from "url";
 
 process.env.DATABASE_URL = `file:${path.join('/var/data', 'dev.db')}`;
 
-const allowedOrigins = ['https://deft-bunny-837f65.netlify.app', 'http://localhost:5173'];
+const allowedOrigins = ['https://amaurycelarier.netlify.app/', 'http://localhost:5173'];
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
