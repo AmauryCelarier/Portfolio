@@ -4,13 +4,29 @@ import cors from "cors";
 import path from "path";
 import { fileURLToPath } from "url";
 
+const path = require('path');
+process.env.DATABASE_URL = `file:${path.join('/var/data', 'dev.db')}`;
+
+const allowedOrigins = ['https://deft-bunny-837f65.netlify.app', 'http://localhost:5173'];
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const app = express();
 const prisma = new PrismaClient();
 
-app.use(cors());
+app.use(cors({
+  origin: function(origin, callback) {
+    if (!origin) return callback(null, true);
+    
+    if (allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Non autorisé par CORS'));
+    }
+  },
+  credentials: true
+}));
 app.use(express.json());
 app.use("/images", express.static(path.join(__dirname, "public/images")));
 
