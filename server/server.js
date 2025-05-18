@@ -4,7 +4,6 @@ import cors from "cors";
 import path from "path";
 import { fileURLToPath } from "url";
 
-const path = require('path');
 process.env.DATABASE_URL = `file:${path.join('/var/data', 'dev.db')}`;
 
 const allowedOrigins = ['https://deft-bunny-837f65.netlify.app', 'http://localhost:5173'];
