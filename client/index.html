@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+		<meta charset="utf-8">
+		<title>Portfolio - Amaury Célarier</title>
+        <link rel="stylesheet" href="/main.css">
+</head>
+<body>
+	  <div id="loading-screen">
+		<div class="loading-content">
+		  <h1>Bienvenue dans le portfolio de</h1>
+		  <h2>Amaury Célarier</h2>
+		  <p id="chargement-text">Chargement de votre espace interactif...</p>
+		  <div id="progress-bar"><div></div></div>
+		  <button id="start-button" style="display: none;">Entrer dans la room</button>
+		</div>
+	  </div>
+	
+        <!-- Sidebar -->
+		<div id="sidebar" class="sidebar">
+			<h2 id="sidebar-title">Menu</h2> <!-- Titre dynamique -->
+			<ul id="category-list">
+				<li>
+					<a href="#projects" data-title="Projets" class="menu-button">
+						Projets
+						<span class="tooltip">Mon espace de création et d’expérimentation</span>
+					</a>
+				</li>
+				<li>
+					<a href="#about" data-title="À propos" class="menu-button">
+						À propos
+						<span class="tooltip">Voir mon CV, compétences et centres d’intérêt</span>
+					</a>
+				</li>
+				<li>
+					<a href="#contact" data-title="Contact" class="menu-button">
+						Contact
+						<span class="tooltip">Entrer en contact avec le créateur</span>
+					</a>
+				</li>
+				<li>
+					<a href="#help" data-title="Aides" class="menu-button">
+						Aides
+						<span class="tooltip">Afficher les objets interactifs</span>
+					</a>
+				</li>
+			</ul>
+			
+			<div id="project-list"></div>
+			<div id="project-details" style="display: none;"></div>
+			<div id="project-images"></div>
+
+			<button id="back-button" style="display: none;">Retour</button> <!-- Bouton "Retour" -->
+		</div>
+
+    <!-- Bouton unique pour ouvrir/fermer -->
+    <button id="toggle-sidebar" class="toggle-button">>></button>
+
+	<div id="dialogue-box" class="dialogue-box hidden">
+		<span id="dialogue-text"></span>
+		<button id="dialogue-close">Continuer</button>
+	  </div>
+
+    <!-- Conteneur de la scène 3D -->	
+    <div id="webgl-container"></div>
+
+    <!-- Script principal -->
+    <script type="module" src="/src/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,556 @@
+/* Ajouter la police Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
+
+/* 🌑 Style général */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Share Tech Mono', monospace;
+    background-color: #0d0d1a; /* Très sombre pour un fond futuriste */
+    color: #00fff7; /* Texte néon */
+}
+
+/* 🌐 Loading Screen Cyberpunk */
+#loading-screen {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: radial-gradient(circle at center, #000000 60%, #0a0a0a 100%);
+    color: #00fff7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    flex-direction: column;
+    font-family: 'Orbitron', sans-serif;
+    box-shadow: inset 0 0 40px rgba(0, 255, 255, 0.4);
+}
+
+.loading-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 15px; /* espace entre les éléments */
+    animation: fadeIn 1s ease-in;
+}
+
+.loading-content h1 {
+    font-size: 2.5em;
+    color: #00fff7;
+    text-shadow: 0 0 10px #00fff7, 0 0 30px #ff00c8;
+    margin-bottom: 10px;
+}
+
+.loading-content h2 {
+    font-size: 1.8em;
+    color: #ff00c8;
+    text-shadow: 0 0 10px #ff00c8, 0 0 20px #00fff7;
+    margin-bottom: 20px;
+}
+
+.loading-content p {
+    font-size: 1.2em;
+    color: #ffffff;
+    text-shadow: 0 0 5px #00fff7;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+#progress-bar {
+    width: 300px;
+    height: 15px;
+    background-color: #111;
+    margin-top: 30px;
+    border: 2px solid #00fff7;
+    box-shadow: 0 0 10px #00fff7;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+#progress-bar > div {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #ff00c8, #00fff7);
+    box-shadow: 0 0 10px #ff00c8, 0 0 20px #00fff7;
+    border-radius: 10px;
+    transition: width 0.3s ease;
+}
+
+#start-button {
+    margin-top: 30px;
+    padding: 12px 28px;
+    background: transparent;
+    border: 2px solid #00fff7;
+    color: #00fff7;
+    font-size: 1em;
+    font-family: 'Orbitron', sans-serif;
+    text-shadow: 0 0 5px #00fff7;
+    cursor: pointer;
+    border-radius: 10px;
+    box-shadow: 0 0 10px #00fff7;
+    transition: all 0.3s ease;
+}
+
+#start-button:hover {
+    background: #00fff7;
+    color: #000;
+    text-shadow: none;
+    box-shadow: 0 0 20px #00fff7, 0 0 30px #ff00c8;
+}
+
+/* 🎭 WebGL container */
+#webgl-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    transition: width 0.3s ease;
+    pointer-events: auto;
+}
+
+/* 📌 Sidebar */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: -450px;
+    width: 450px;
+    height: 100%;
+    background: linear-gradient(180deg, #0a0a1a 0%, #121235 100%);
+    color: #00fff7;
+    box-shadow: 0 0 20px #00fff7;
+    transition: left 0.3s ease, width 0.3s ease;
+    z-index: 2;
+    padding: 20px;
+    overflow-y: auto;
+    max-height: 100vh;
+    border-right: 2px solid #00fff7;
+    pointer-events: auto;
+}
+
+#category-list {
+    margin-top: 30px;
+    padding-left: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+#category-list li {
+    background: rgba(0, 255, 247, 0.1);
+    border: 1px solid #00fff7;
+    border-radius: 12px;
+    padding: 12px 20px;
+    transition: background 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 0 10px #00fff733;
+}
+
+#category-list li:hover {
+    background: rgba(255, 0, 255, 0.2);
+    transform: translateX(5px);
+    box-shadow: 0 0 15px #ff00ff77;
+}
+
+#category-list a {
+    display: block;
+    color: #00fff7;
+    font-size: 20px;
+    font-weight: 700;
+    text-decoration: none;
+    text-shadow: 0 0 6px #00fff7;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+#category-list a:hover {
+    color: #ff00ff;
+    text-shadow: 0 0 10px #ff00ff;
+}
+
+.menu-button {
+    position: relative;
+    display: inline-block;
+}
+
+.menu-button .tooltip {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 255, 247, 0.1);
+    color: #00fff7;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 300; /* plus léger que le défaut */
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    z-index: 10;
+    margin-bottom: 10px;
+    border: 1px solid #00f7ff;
+    box-shadow: 0 0 8px #00f7ff, 0 0 16px #007bff80;
+    text-shadow: 0 0 3px #00ffff;
+    backdrop-filter: blur(2px);
+}
+
+.menu-button:hover .tooltip {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-4px);
+}
+
+/* Choix de niveau*/
+.level-selector {
+    margin-bottom: 15px;
+    font-size: 16px;
+    color: #00fff7;
+}
+
+.level-selector select {
+    background-color: #121235;
+    color: #00fff7;
+    border: 2px solid #00fff7;
+    padding: 5px 10px;
+    border-radius: 8px;
+    font-weight: bold;
+    margin-left: 10px;
+}
+
+/* 🖱️ Scrollbar personnalisée */
+.sidebar::-webkit-scrollbar {
+    width: 8px;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background-color: #00fff7; 
+    border-radius: 4px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+    background: #121235;
+}
+
+/* 🔘 Bouton toggle */
+.toggle-button {
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    font-size: 24px;
+    background-color: #0a0a1a;
+    color: #00fff7;
+    border: 2px solid #00fff7;
+    border-radius: 50%;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 3;
+    transition: left 0.3s ease, transform 0.3s ease, background-color 0.3s ease;
+    box-shadow: 0 0 10px #00fff7;
+}
+
+.toggle-button:hover {
+    background-color: #00fff77c;
+}
+
+.toggle-button.active {
+    transform: rotate(180deg);
+}
+
+/* 🔗 Liens et titres */
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar li {
+    margin: 15px 0;
+}
+
+.sidebar a {
+    color: #00fff7;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: 600;
+    transition: color 0.3s ease;
+    text-shadow: 0 0 5px #00fff7;
+}
+
+.sidebar a:hover {
+    color: #ff00ff;
+    text-shadow: 0 0 10px #ff00ff;
+}
+
+/* 🎯 Titre sidebar */
+#sidebar-title {
+    font-size: 35px;
+    font-weight: 600;
+    color: #00fff7;
+    margin-bottom: 20px;
+    text-align: center;
+    border-bottom: 2px solid #ff00ff;
+    padding-bottom: 10px;
+    text-shadow: 0 0 5px #00fff7;
+}
+
+/* 🔙 Bouton retour */
+#back-button {
+    background-color: transparent;
+    border: 2px solid #00fff7;
+    color: #00fff7;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    margin: 20px auto;
+    display: block;
+    text-align: center;
+    transition: background-color 0.3s ease;
+    text-shadow: 0 0 5px #00fff7;
+}
+
+#back-button:hover {
+    background-color: #00fff720;
+}
+
+/* 🏗️ Liste des projets */
+#project-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+/* 🖼️ Item projet */
+.project-item {
+    background: #14142b;
+    border-radius: 12px;
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out, background-color 0.3s ease;
+    display: flex;
+    align-items: center;
+    min-width: 120px;
+    max-width: 200px;
+    aspect-ratio: 1 / 1;
+    font-size: 14px;
+    font-weight: bold;
+    color: #00fff7;
+    box-shadow: 0 0 8px #00fff7;
+}
+
+.project-item:hover {
+    transform: scale(1.05);
+   background-color: #1f1f3d;
+}
+
+/* 🖼️ Images des projets */
+.project-images {
+    margin-top: 15px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+}
+
+.project-image {
+    width: 100%;
+    max-width: 280px; /* Taille uniforme */
+    height: auto;
+    border-radius: 12px;
+    object-fit: cover; /* Garde une belle mise en page */
+    box-shadow: 0 0 12px #00fff7;
+    transition: transform 0.3s ease;
+}
+
+.project-image:hover {
+    transform: scale(1.05);
+}
+
+/* 📌 Section détails projet */
+.project-details {
+    background: #14142b;
+    color: #00fff7;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 0 12px #00fff7;
+    max-width: 750px;
+    margin: 20px auto;
+}
+
+.project-details h2 {
+    color: #ff00ff;
+    text-align: center;
+    font-size: 26px;
+    margin-bottom: 10px;
+    text-shadow: 0 0 8px #ff00ff;
+}
+
+.project-info p {
+    margin: 5px 0;
+    font-size: 16px;
+}
+
+/* 🏆 Sections "Contenu" et "Compétences" */
+.project-content, .project-skills {
+    margin-top: 20px;
+    padding: 10px;
+    background: #1e1e40;
+    border-radius: 8px;
+}
+
+.project-content h3, .project-skills h3 {
+    color: #ff00ff;
+    font-size: 20px;
+    text-shadow: 0 0 6px #ff00ff;
+}
+
+/* 🔹 Séparation des compétences techniques et soft skills */
+.skills-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.skills-list {
+    flex: 1;
+    min-width: 200px;
+    background: #1e1e40;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px #00fff7;
+}
+
+.skills-list h3 {
+    color: #ff00ff;
+    font-size: 20px;
+    margin-bottom: 10px;
+    text-align: center;
+    text-shadow: 0 0 6px #ff00ff;
+}
+
+.skills-list ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.skills-list li {
+    padding: 5px 0;
+    font-size: 16px;
+    text-align: center;
+}
+
+/* 📎 Lien projet */
+.project-link {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.project-link a {
+    display: inline-block;
+    background: transparent;
+    border: 2px solid #00fff7;
+    color: #00fff7;
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: background 0.3s ease;
+    text-shadow: 0 0 5px #00fff7;
+}
+
+.project-link a:hover {
+    background: #00fff720;
+}
+
+
+/* 📎 Contact */
+.contact-list {
+    list-style: none;
+    padding: 0;
+}
+
+.contact-list li {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+}
+
+.contact-list a {
+    text-decoration: none;
+    color: #00fff7;
+    display: flex;
+    align-items: center;
+    text-shadow: 0 0 5px #00fff7;
+}
+
+.contact-icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+    filter: drop-shadow(0 0 3px #00fff7);
+}
+
+
+/* 💬 Dialogue */
+
+
+.dialogue-box {
+    position: absolute;
+    bottom: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(15, 15, 25, 0.9);
+    color: #00fff7;
+    padding: 18px 28px;
+    border: 2px solid #00fff7;
+    border-radius: 12px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 16px;
+    max-width: 600px;
+    z-index: 999;
+    box-shadow: 0 0 12px #00fff7, 0 0 30px #00fff7 inset;
+    text-shadow: 0 0 5px #00fff7;
+    backdrop-filter: blur(4px);
+    letter-spacing: 1px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    transition: opacity 0.3s ease;
+}
+
+.dialogue-box button {
+    background: transparent;
+    border: 1px solid #00fff7;
+    color: #00fff7;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-family: 'Share Tech Mono', monospace;
+    cursor: pointer;
+    text-shadow: 0 0 5px #00fff7;
+    transition: background 0.2s ease;
+}
+
+.dialogue-box button:hover {
+    background: #00fff720;
+}
+
+.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
