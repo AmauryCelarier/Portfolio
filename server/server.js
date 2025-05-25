@@ -4,6 +4,13 @@ import cors from "cors";
 import path from "path";
 import { fileURLToPath } from "url";
 
+import fs from 'fs';
+import path from 'path';
+
+const dataDir = '/var/data';
+if (!fs.existsSync(dataDir)) {
+  fs.mkdirSync(dataDir, { recursive: true });
+}
 
 
 const __filename = fileURLToPath(import.meta.url);
