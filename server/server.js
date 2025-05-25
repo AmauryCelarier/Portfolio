@@ -4,34 +4,32 @@ import cors from "cors";
 import path from "path";
 import { fileURLToPath } from "url";
 
-process.env.DATABASE_URL = `file:${path.join('/var/data', 'dev.db')}`;
 
-const allowedOrigins = ['https://amaurycelarier.netlify.app/', 'http://localhost:5173'];
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
+if (!process.env.DATABASE_URL) {
+  process.env.DATABASE_URL = `file:${path.join(__dirname, 'prisma/dev.db')}`;
+}
+
+const allowedOrigins = ['https://amaurycelarier.netlify.app', 'http://localhost:5173'];
+
 const app = express();
 const prisma = new PrismaClient();
 
+app.use((req, res, next) => {
+  console.log(`Requête reçue : ${req.method} ${req.url} - Origin: ${req.headers.origin || 'Aucune'}`);
+  next();
+});
+
 app.use(cors({
-  origin: function(origin, callback) {
-    if (!origin) return callback(null, true);
-    
-    if (allowedOrigins.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      callback(new Error('Non autorisé par CORS'));
-    }
-  },
+  origin: true,
   credentials: true
 }));
-app.use(express.json());
-app.use("/images", express.static(path.join(__dirname, "public/images")));
 
-app.use(express.static(path.join(__dirname, '../client')));
-app.use(express.static(path.join(__dirname, '../client/dist')));
-app.use(express.static('public'));
+app.use(express.json());
+
 
 app.use((req, res, next) => {
   console.log(`Requête reçue : ${req.method} ${req.url}`);
@@ -86,6 +84,12 @@ app.get("/api/project/:id", async (req, res) => {
   }
 });
 
+app.use("/images", express.static(path.join(__dirname, "public/images")));
+
+app.use(express.static(path.join(__dirname, '../client')));
+app.use(express.static(path.join(__dirname, '../client/dist')));
+app.use(express.static('public'));
+
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/dist/index.html'));
 });
@@ -94,5 +98,6 @@ app.get('*', (req, res) => {
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`🚀 Serveur démarré sur http://localhost:${PORT}`);
+  console.log(`DATABASE_URL: ${process.env.DATABASE_URL}`);
 });
 
