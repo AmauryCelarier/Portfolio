@@ -43,6 +43,8 @@ app.use((req, res, next) => {
 
 app.get('/admin/seed', async (req, res) => {
   try {
+    // Copiez le contenu de votre seed.js ici
+
     console.log("🌱 Début du seeding...");
     console.log("Réinitialisation des projets...");
 
@@ -272,6 +274,9 @@ app.get('/admin/seed', async (req, res) => {
     console.log(`Projet "${project_04.title}" créé avec succès !`);
 
     console.log("✅ Seeding terminé avec succès !");
+
+    //Fin du contenu seed
+
     res.json({ message: "Seed terminé" });
   } catch (error) {
     res.status(500).json({ error: error.message });
