@@ -2,6 +2,7 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 async function main() {
+    console.log("🌱 Début du seeding...");
     console.log("Réinitialisation des projets...");
 
    // Supprime toutes les entrées
@@ -228,6 +229,8 @@ async function main() {
     });
 
     console.log(`Projet "${project_04.title}" créé avec succès !`);
+
+    console.log("✅ Seeding terminé avec succès !");
 }
 
 // Fin fonction async main()
