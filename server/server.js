@@ -19,6 +19,10 @@ const allowedOrigins = ['https://amaurycelarier.netlify.app', 'http://localhost:
 const app = express();
 const prisma = new PrismaClient();
 
+prisma.$connect()
+  .then(() => console.log("✅ Connexion Prisma réussie"))
+  .catch((error) => console.error("❌ Erreur connexion Prisma:", error));
+
 app.use((req, res, next) => {
   console.log(`Requête reçue : ${req.method} ${req.url} - Origin: ${req.headers.origin || 'Aucune'}`);
   next();
@@ -39,12 +43,25 @@ app.use((req, res, next) => {
 
 // Route pour récupérer les projets
 app.get("/projects", async (req, res) => {
+    console.log("Route /projects appelée");
+  console.log("DATABASE_URL:", process.env.DATABASE_URL ? "Définie" : "Non définie");
   try {
+    console.log("Tentative de connexion Prisma...");
     const projects = await prisma.project.findMany();
+    console.log("✅ Projets récupérés:", projects.length, "projets");
+    console.log("Projets:", JSON.stringify(projects, null, 2));
     res.json(projects);
   } catch (error) {
-    res.status(500).json({ error: "Erreur lors de la récupération des projets" });
+     console.error("❌ ERREUR dans /projects:");
+    console.error("Message:", error.message);
+    console.error("Code:", error.code);
+    console.error("Stack complet:", error.stack);
+    res.status(500).json({ 
+      error: "Erreur lors de la récupération des projets",
+      message: error.message 
+    });
   }
+  console.log("=== FIN route /projects ===");
 });
 
 app.post("/projects/reset", async (req, res) => {
