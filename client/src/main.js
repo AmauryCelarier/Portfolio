@@ -364,6 +364,20 @@ window.addEventListener('touchcancel', (event) => {
     isTouching = false;
 });
 
+window.addEventListener('touchend', (event) => {
+    // Si c'est un tap simple (pas un drag), on peut déclencher onMouseClick
+    if (event.changedTouches.length === 1 && !event.defaultPrevented) {
+        const touch = event.changedTouches[0];
+        // Créer un objet similaire à un événement de souris
+        const fakeMouseEvent = {
+            clientX: touch.clientX,
+            clientY: touch.clientY,
+            preventDefault: () => {}
+        };
+        onMouseClick(fakeMouseEvent);
+    }
+});
+
 // Fonction pour mettre à jour la position de la caméra
 function updateCameraRotation(x_camcenter,y_camcenter,z_camcenter) {
     camera.position.x = cameraDistance * Math.sin(targetRotationY) * Math.cos(targetRotationX);
