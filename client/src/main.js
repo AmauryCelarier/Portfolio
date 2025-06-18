@@ -554,6 +554,70 @@ aboutLink.addEventListener("click",(e)=>{
     focusOnCV();
 })
 
+const numeriqueRespLink = document.querySelector('a[data-title="Numérique Responsable"]');
+numeriqueRespLink.addEventListener("click",(e)=>{
+    e.preventDefault();
+    focusOnNumeriqueResp();
+})
+
+function focusOnNumeriqueResp(){
+    closeDialogue();
+    closeSidebar();
+
+    isCameraUpdate = false;
+    isZoomDisabled = true;
+
+     // Affichage dans la sidebar
+     openSidebar();
+    sidebarTitle.textContent = "Numérique Responsable";
+    categoryList.style.display = "none";
+    backButton.style.display = "block";
+
+    const container = document.getElementById("project-list");
+    container.innerHTML = `
+        <div class="numerique-responsable-section">
+            <h3>🌱 Numérique Responsable</h3>
+            <p>Le secteur numérique représente aujourd'hui 4% des émissions mondiales de GES. 
+            J'ai fait du numérique responsable un pilier central de ma pratique professionnelle.</p>
+
+            <h4>🎯 Ma Vision</h4>
+            <p>Pour moi, le numérique responsable ne se limite pas à développer des applications "vertes". 
+            Il s'agit de concevoir des architectures et algorithmes où la légèreté, l'optimisation et la 
+            maintenabilité sont prioritaires.</p>
+
+            <h4>⚡ Optimisation et Performance</h4>
+            <ul>
+                <li><strong>Choix technologiques éclairés :</strong> Frameworks performants et durables</li>
+                <li><strong>Code optimisé :</strong> Réduction de la consommation de ressources</li>
+                <li><strong>Accessibilité numérique :</strong> Conception inclusive pour tous</li>
+                <li><strong>Gestion des médias :</strong> Compression et optimisation</li>
+                <li><strong>Architecture sobre :</strong> Minimisation des requêtes</li>
+            </ul>
+
+            <h4>🤖 L'IA : Un Outil à Double Tranchant</h4>
+            <p>L'IA permet de gagner du temps et d'améliorer la qualité du code, mais je reste 
+            conscient de son impact environnemental. J'adopte une approche raisonnée :</p>
+            <ul>
+                <li><strong>Prompts optimisés :</strong> Rédaction efficace pour minimiser les interactions</li>
+                <li><strong>Usage ciblé :</strong> Utilisation uniquement quand nécessaire</li>
+                <li><strong>Alternatives locales :</strong> Privilégier les outils locaux</li>
+            </ul>
+
+            <h4>📊 Mes Pratiques Concrètes</h4>
+            <ul>
+                <li><strong>Éco-conception :</strong> Audit avec Lighthouse et EcoIndex</li>
+                <li><strong>Accessibilité :</strong> Tests WCAG et RGAA</li>
+                <li><strong>Sobriété numérique :</strong> Fonctionnalités au strict nécessaire</li>
+            </ul>
+
+            <h4>💡 Un Engagement Continu</h4>
+            <p>Le numérique responsable est un processus d'amélioration continue. Cette démarche 
+            améliore la performance, la maintenabilité et la compétitivité des solutions développées.</p>
+        </div>
+    `;
+    container.style.display = "block";
+}
+
 function focusOnCV() {
     closeDialogue();
     closeSidebar();
