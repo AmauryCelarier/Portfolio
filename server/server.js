@@ -43,6 +43,10 @@ app.use((req, res, next) => {
 
 app.get('/admin/seed', async (req, res) => {
   try {
+    const existingData = await prisma.yourModel.findFirst();
+    if (!existingData) {
+    // Faire le seed seulement si pas de données
+  
     // Copiez le contenu de votre seed.js ici
 
     console.log("🌱 Début du seeding...");
@@ -278,6 +282,7 @@ app.get('/admin/seed', async (req, res) => {
     //Fin du contenu seed
 
     res.json({ message: "Seed terminé" });
+}
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
