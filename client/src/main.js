@@ -235,12 +235,21 @@ let isZoomDisabled = false; // Ajout d'une variable pour désactiver le zoom
 const minVerticalAngle = 0.1; // Limite vers le bas (4°)
 const maxVerticalAngle = Math.PI / 2; // Limite vers le haut (45°)
 
+// Variables pour la gestion tactile
+let isTouching = false;
+let touchStartDistance = 0; // Pour le pinch-to-zoom
+let lastTouchX = 0;
+let lastTouchY = 0;
+
+// ===== GESTION SOURIS =====
+
 // Gestion des événements souris
 window.addEventListener('mousedown', (event) => {
     isMouseDown = true;
     mouseX = event.clientX;
     mouseY = event.clientY;
 });
+
 
 window.addEventListener('mouseup', () => {
     isMouseDown = false;
@@ -275,6 +284,84 @@ window.addEventListener('wheel', (event) => {
         // Limiter la distance de zoom pour éviter un zoom excessif
         cameraDistance = Math.max(18, Math.min(50, cameraDistance));
     }
+});
+
+// ===== GESTION TACTILE ===== 
+
+// Fonction pour calculer la distance entre deux touches
+function getTouchDistance(touches) {
+    const dx = touches[0].clientX - touches[1].clientX;
+    const dy = touches[0].clientY - touches[1].clientY;
+    return Math.sqrt(dx * dx + dy * dy);
+}
+
+window.addEventListener('touchstart', (event) => {
+    event.preventDefault(); // Empêche le comportement par défaut (scroll, zoom du navigateur)
+    
+    if (event.touches.length === 1) {
+        // Un seul doigt : rotation
+        isTouching = true;
+        lastTouchX = event.touches[0].clientX;
+        lastTouchY = event.touches[0].clientY;
+    } else if (event.touches.length === 2) {
+        // Deux doigts : zoom (pinch)
+        isTouching = false; // Désactiver la rotation pendant le zoom
+        touchStartDistance = getTouchDistance(event.touches);
+    }
+});
+
+window.addEventListener('touchmove', (event) => {
+    event.preventDefault();
+    
+    if (event.touches.length === 1 && isTouching) {
+        // Rotation avec un doigt
+        const touchX = event.touches[0].clientX;
+        const touchY = event.touches[0].clientY;
+        
+        const deltaX = touchX - lastTouchX;
+        const deltaY = touchY - lastTouchY;
+        
+        // Même logique que pour la souris
+        targetRotationY -= deltaX * rotationSpeed;
+        targetRotationX += deltaY * rotationSpeed;
+        
+        // Limiter la rotation verticale
+        targetRotationX = Math.max(minVerticalAngle, Math.min(maxVerticalAngle, targetRotationX));
+        
+        lastTouchX = touchX;
+        lastTouchY = touchY;
+        
+    } else if (event.touches.length === 2 && !isZoomDisabled) {
+        // Zoom avec deux doigts (pinch)
+        const currentDistance = getTouchDistance(event.touches);
+        const deltaDistance = currentDistance - touchStartDistance;
+        
+        const zoomSpeed = 0.01; // Vitesse de zoom tactile (plus lente que la molette)
+        cameraDistance -= deltaDistance * zoomSpeed;
+        cameraDistance = Math.max(18, Math.min(50, cameraDistance));
+        
+        touchStartDistance = currentDistance;
+    }
+});
+
+window.addEventListener('touchend', (event) => {
+    event.preventDefault();
+    
+    if (event.touches.length === 0) {
+        // Plus de doigts sur l'écran
+        isTouching = false;
+    } else if (event.touches.length === 1) {
+        // Il reste un doigt : reprendre la rotation
+        isTouching = true;
+        lastTouchX = event.touches[0].clientX;
+        lastTouchY = event.touches[0].clientY;
+    }
+});
+
+// Empêcher le comportement par défaut sur touchcancel
+window.addEventListener('touchcancel', (event) => {
+    event.preventDefault();
+    isTouching = false;
 });
 
 // Fonction pour mettre à jour la position de la caméra
