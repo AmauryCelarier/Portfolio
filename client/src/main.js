@@ -15,7 +15,7 @@ const sidebarTitle = document.getElementById("sidebar-title");
 const categoryLinks = document.querySelectorAll(".sidebar a");
 
 // Largeur de la sidebar
-const sidebarWidth = 450;
+const sidebarWidth = 600;
 
 // Bascule l'état de la sidebar et déplace le bouton
 toggleSidebarButton.addEventListener('click', () => {
@@ -539,8 +539,8 @@ function focusOnComputer() {
     isZoomDisabled = true;
     
     // Définir la nouvelle position et cible de la caméra
-    const targetPosition = new THREE.Vector3(computer.position.x - 1, computer.position.y + 1, computer.position.z + 2);
-    const targetLookAt = new THREE.Vector3(computer.position.x, computer.position.y + 0.5, computer.position.z);
+    const targetPosition = new THREE.Vector3(computer.position.x - 1.5, computer.position.y + 1, computer.position.z + 2);
+    const targetLookAt = new THREE.Vector3(computer.position.x - 0.5, computer.position.y + 0.5, computer.position.z);
    
 
     // Animation fluide vers la nouvelle position
@@ -1154,15 +1154,10 @@ let slideshowInterval = null;
                     <p><strong>Date de création :</strong> ${new Date(proj.createdAt).toLocaleDateString()}</p>
                 </div>
 
-                <div class="project-content">
-                    <h3>Contenu :</h3>
-                    ${paragraphsHtml}
-                </div>
-
                 <div class="skills-container">
                     ${proj.skills?.some(s => s.skill.type === "TECHNICAL") ? `
                         <div class="skills-list">
-                            <h3>Compétences Techniques</h3>
+                            <h3>Compétences Techniques Liées</h3>
                             <ul>
                                 ${proj.skills.filter(s => s.skill.type === "TECHNICAL")
                                     .map(s => `<li class="skill-badge">${s.skill.name}</li>`)
@@ -1173,7 +1168,7 @@ let slideshowInterval = null;
                     
                     ${proj.skills?.some(s => s.skill.type === "SOFT") ? `
                         <div class="skills-list">
-                            <h3>Soft Skills</h3>
+                            <h3>Soft Skills Liés</h3>
                             <ul>
                                 ${proj.skills.filter(s => s.skill.type === "SOFT")
                                     .map(s => `<li class="skill-badge">${s.skill.name}</li>`)
@@ -1181,6 +1176,11 @@ let slideshowInterval = null;
                             </ul>
                         </div>
                     ` : ""}
+                </div>
+
+                <div class="project-content">
+                    <h3>Contenu :</h3>
+                    ${paragraphsHtml}
                 </div>
 
                 <div class="project-images">
